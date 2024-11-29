@@ -12,7 +12,7 @@ import sort from "../assets/icons/sort.svg";
 
 
 // Import IMAGES here
-// import heroImg from "../assets/images/hero-img.png";
+import studentTiffinLogo from "../assets/images/student-tiffin.jpeg";
 
 
 
@@ -33,5 +33,5 @@ export const ICONS = {
 
 
 export const IMAGES = {
-   
+    studentTiffinLogo
 }
