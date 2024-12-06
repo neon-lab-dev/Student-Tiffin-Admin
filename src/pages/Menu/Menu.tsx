@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Heading from "../../components/shared/Heading/Heading";
-import ManuTable from "./MenuTable";
+import MenuTable from "./MenuTable";
 
 const Menu = () => {
   return (
@@ -15,7 +15,7 @@ const Menu = () => {
         Add Product
       </Link>
       </div>
-      <ManuTable/>
+      <MenuTable/>
     </div>
   );
 };

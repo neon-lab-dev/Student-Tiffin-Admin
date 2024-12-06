@@ -2,13 +2,13 @@ import { BaseQueryFn, createApi, FetchBaseQueryError, FetchArgs, fetchBaseQuery 
 
 const baseQuery: BaseQueryFn<FetchArgs, unknown, FetchBaseQueryError> = async (args, api, extraOptions) => {
   const rawBaseQuery = fetchBaseQuery({
-    baseUrl: 'https://blogbackend-theta.vercel.app/api/v1',
+    baseUrl: 'https://student-tiffin-backend.vercel.app/api/v1',
     credentials: 'include',
   });
 
   const result = await rawBaseQuery(args, api, extraOptions);
 
-  // Check if there's an error and handle it
+ 
   if (result.error) {
     return {
       error: {
@@ -18,7 +18,7 @@ const baseQuery: BaseQueryFn<FetchArgs, unknown, FetchBaseQueryError> = async (a
     };
   }
 
-  // Return result as expected by BaseQueryFn
+  
   return {
     data: result.data,
   };
@@ -27,6 +27,6 @@ const baseQuery: BaseQueryFn<FetchArgs, unknown, FetchBaseQueryError> = async (a
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery,
-  tagTypes: ['users', 'blogs', 'categories'],
+  tagTypes: ['users', 'products'],
   endpoints: () => ({}),
 });
