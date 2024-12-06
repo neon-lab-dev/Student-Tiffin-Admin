@@ -2,6 +2,12 @@ import { useState } from "react";
 import { ICONS } from "../../assets";
 import InputField from "../../components/shared/InputField/InputField";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useAppDispatch } from "../../redux/hooks";
+import { useLoginMutation } from "../../redux/Features/Auth/authApi";
+import { setUser } from "../../redux/features/Auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import Cookies from "js-cookie";
 
 type TLoginFormValues = {
   email: string;
@@ -9,15 +15,33 @@ type TLoginFormValues = {
 };
 
 const Login = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [isPasswordVissible, setIsPasswordVissible] = useState(false);
+  const [login, { isLoading }] = useLoginMutation();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<TLoginFormValues>();
 
-  const handleLogin: SubmitHandler<TLoginFormValues> = (data) => {
-    console.log("Form submitted data:", data);
+  const handleLogin: SubmitHandler<TLoginFormValues> = async (data) => {
+    const loginData = {
+      email: data.email,
+      password: data.password,
+    };
+    try {
+      const response = await login(loginData).unwrap();
+      if (response) {
+        dispatch(setUser({ user: response.user }));
+        Cookies.set("isAuthenticated", "true");
+        toast.success("Welcome Back!!");
+      }
+
+      navigate("/dashboard");
+    } catch (err) {
+      toast.error("Something went wrong! Please try again.");
+    }
   };
 
   return (
@@ -58,9 +82,23 @@ const Login = () => {
       </div>
       <button
         type="submit"
-        className="p-5 text-white bg-[#DE3C4B] rounded-xl text-lg leading-6 font-semibold"
+        className={`${
+          isLoading ? "bg-[#b1303d]" : "bg-[#DE3C4B]"
+        } p-5 text-white  rounded-xl text-lg font-semibold`}
       >
-        Login
+        {isLoading ? (
+          <div className="flex items-center justify-center gap-3">
+            <p>Login</p>
+            {/* Loader */}
+            <div className="size-7 flex gap-1 items-center justify-center">
+              <div className="size-[6px] animate-[bounce_.6s_linear_.2s_infinite] bg-white rounded-full"></div>
+              <div className="size-[6px] animate-[bounce_.6s_linear_.3s_infinite] bg-white rounded-full"></div>
+              <div className="size-[6px] animate-[bounce_.6s_linear_.4s_infinite] bg-white rounded-full"></div>
+            </div>
+          </div>
+        ) : (
+          "Login"
+        )}
       </button>
     </form>
   );

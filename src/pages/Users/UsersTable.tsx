@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ICONS } from "../../assets";
 import { tdStyle, thStyle } from "./user.constants";
 
-type TUser ={
+type TUser = {
   id: number;
   userId: string;
   name: string;
@@ -11,12 +11,12 @@ type TUser ={
   userType?: string;
   plan?: string;
   status: string;
-}
+};
 
 type TUsersTableProps = {
   data: TUser[];
   columns: string[];
-}
+};
 
 const UsersTable: React.FC<TUsersTableProps> = ({ data, columns }) => {
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
@@ -46,7 +46,11 @@ const UsersTable: React.FC<TUsersTableProps> = ({ data, columns }) => {
               <th
                 key={col}
                 className={`${thStyle} ${
-                  index === 0 ? "rounded-tl-3xl" : index === columns.length - 1 ? "rounded-tr-3xl" : ""
+                  index === 0
+                    ? "rounded-tl-3xl"
+                    : index === columns.length - 1
+                    ? "rounded-tr-3xl"
+                    : ""
                 }`}
               >
                 {col}
@@ -74,7 +78,9 @@ const UsersTable: React.FC<TUsersTableProps> = ({ data, columns }) => {
               <td className={tdStyle}>
                 <div
                   className={`${
-                    user.status === "Unavailable" ? "bg-red-100 text-red-600" : "bg-[#DCFFD6] text-[#24461F]"
+                    user.status === "Unavailable"
+                      ? "bg-red-100 text-red-600"
+                      : "bg-[#DCFFD6] text-[#24461F]"
                   } rounded-3xl py-[10px] px-5 font-Poppins leading-6 flex items-center justify-center`}
                 >
                   {user.status}
@@ -85,7 +91,11 @@ const UsersTable: React.FC<TUsersTableProps> = ({ data, columns }) => {
                   onClick={() => handleDropdownToggle(user.id)}
                   className="p-2 hover:bg-gray-100 rounded-md"
                 >
-                  <img src={ICONS.threeDots} alt="three-dots" className="size-6" />
+                  <img
+                    src={ICONS.threeDots}
+                    alt="three-dots"
+                    className="size-6"
+                  />
                 </button>
 
                 {activeDropdown === user.id && (

@@ -5,6 +5,7 @@ import AuthLayout from "../layouts/AuthLayout/AuthLayout";
 import Menu from "../pages/Menu/Menu";
 import Users from "../pages/Users/Users";
 import AddProduct from "../pages/AddProduct/AddProduct";
+import Orders from "../pages/Orders/Orders";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: "users",
         element: <Users/>,
+      },
+      {
+        path: "orders",
+        element: <Orders/>,
       },
       {
         path: "add-product",

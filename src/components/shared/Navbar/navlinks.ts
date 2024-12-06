@@ -3,24 +3,23 @@ import { ICONS } from "../../../assets";
 export const navLinks = [
     { label: "Menu", path: "/dashboard/menu" },
     { label: "Users", path: "/dashboard/users" },
-    { label: "Orders", path: "/about-us" },
-    { label: "Subscriptions", path: "/subscriptions" },
+    { label: "Orders", path: "/dashboard/orders" },
   ];
 
 export const navigationLinks = [
     {
-      label: "Profile",
-      path: "/setting/profile",
+      label: "Menu",
+      path: "/dashboard/menu",
+      icon: ICONS.menuIcon,
+    },
+    {
+      label: "Users",
+      path: "/dashboard/users",
       icon: ICONS.user,
     },
     {
-      label: "Recent Orders",
-      path: "/setting/recent-orders",
-      icon: ICONS.recentOrders,
-    },
-    {
-      label: "Subscriptions",
-      path: "/setting/subscriptions",
+      label: "Orders",
+      path: "/dashboard/orders",
       icon: ICONS.subscription,
     },
   ];
