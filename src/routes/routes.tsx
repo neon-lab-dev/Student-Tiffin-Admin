@@ -6,6 +6,7 @@ import Menu from "../pages/Menu/Menu";
 import Users from "../pages/Users/Users";
 import AddProduct from "../pages/AddProduct/AddProduct";
 import Orders from "../pages/Orders/Orders";
+import EditProduct from "../pages/EditProduct/EditProduct";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
       {
         path: "add-product",
         element: <AddProduct/>,
+      },
+      {
+        path: "edit-product/:id",
+        element: <EditProduct/>,
       },
     ],
   },

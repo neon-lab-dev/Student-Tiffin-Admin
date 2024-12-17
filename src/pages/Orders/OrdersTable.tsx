@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ICONS } from "../../assets";
 import ConfirmationModal from './../Menu/ConfirmationModal';
 
-const OrdersTable = () => {
+const OrdersTable = ({orders}) => {
   const [openModal, setOpenModal] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
@@ -11,51 +11,12 @@ const OrdersTable = () => {
     setActiveDropdown((prev) => (prev === rowId ? null : rowId));
   };
 
-  const rows = [
-    {
-      id: 1,
-      dishId: "3453456",
-      dishName: "Hyderabadi Aloo Tawa Fry",
-      email : "gmail@email.com",
-      mobileNumber: "+91 87448 84737",
-      orderType: "Regular",
-      status: "Received",
-    },
-    {
-      id: 2,
-      dishId: "3453457",
-      dishName: "Hyderabadi Aloo Tawa Fry",
-      email : "gmail@email.com",
-      mobileNumber: "+91 87448 84737",
-      orderType: "Regular",
-      status: "Out of Delivery",
-    },
-    {
-      id: 3,
-      dishId: "3453458",
-      dishName: "Hyderabadi Aloo Tawa Fry",
-      email : "gmail@email.com",
-      mobileNumber: "+91 87448 84737",
-      orderType: "Regular",
-      status: "Cancelled",
-    },
-    {
-      id: 4,
-      dishId: "3453459",
-      dishName: "Hyderabadi Aloo Tawa Fry",
-      email : "gmail@email.com",
-      mobileNumber: "+91 87448 84737",
-      orderType: "Regular",
-      status: "Vegetarian Meal - Weekly",
-    },
-  ];
-
   const sortedRows =
     sortOrder === "asc"
-      ? [...rows].sort((a, b) => a.status.localeCompare(b.status))
+      ? [...orders].sort((a, b) => a.status.localeCompare(b.status))
       : sortOrder === "desc"
-      ? [...rows].sort((a, b) => b.status.localeCompare(a.status))
-      : rows;
+      ? [...orders].sort((a, b) => b.status.localeCompare(a.status))
+      : orders;
 
   const handleSortToggle = () => {
     setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
@@ -63,7 +24,7 @@ const OrdersTable = () => {
 
   return (
     <div className="mt-8 overflow-x-auto">
-      <table className="bg-white w-full rounded-3xl shadow border-collapse">
+      <table className="bg-white w-full rounded-3xl shadow border-collapse h-full">
         <thead className="bg-gray-100">
           <tr className="bg-white border-b">
             <th className="text-[#293241] font-Poppins font-medium p-4 text-left rounded-tl-3xl">
@@ -97,18 +58,18 @@ const OrdersTable = () => {
         </thead>
 
         <tbody>
-          {sortedRows.map((row) => (
-            <tr key={row.id} className="border-b">
-              <td className="text-[#6E7883] font-Poppins p-4">{row.dishId}</td>
-              <td className="text-[#6E7883] font-Poppins p-4">{row.dishName}</td>
+          {sortedRows?.map((row) => (
+            <tr key={row._id} className="border-b">
+              <td className="text-[#6E7883] font-Poppins p-4">{row._id}</td>
+              <td className="text-[#6E7883] font-Poppins p-4">{row.user?.firstName} {" "} {row?.user?.lastName}</td>
               <td className="text-[#6E7883] font-Poppins p-4">
-                {row.email}
+                {row?.user?.email}
+              </td>
+              <td className="text-[#6E7883] font-Poppins p-4">
+                {row?.user?.phone}
               </td>
               <td className="text-[#6E7883] font-Poppins p-4">
                 {row.orderType}
-              </td>
-              <td className="text-[#6E7883] font-Poppins p-4">
-                {row.mobileNumber}
               </td>
               <td className={`${
                     row.status === "Cancelled" ? "text-[#DE3C4B]" : "text-[#24461F]"
@@ -117,7 +78,7 @@ const OrdersTable = () => {
               </td>
               <td className="text-[#6E7883] font-Poppins p-4 relative">
                 <button
-                  onClick={() => handleDropdownToggle(row.id)}
+                  onClick={() => handleDropdownToggle(row._id)}
                   className="p-2 hover:bg-gray-100 rounded-md"
                 >
                   <img
@@ -127,7 +88,7 @@ const OrdersTable = () => {
                   />
                 </button>
 
-                {activeDropdown === row.id && (
+                {activeDropdown === row._id && (
                   <div className="absolute right-0 mt-2 w-[226px] bg-white border rounded-2xl shadow-lg z-10 p-2">
                     <button
                       onClick={() => console.log(`Editing row ${row.id}`)}

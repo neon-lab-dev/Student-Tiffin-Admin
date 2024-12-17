@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ICONS } from "../../assets";
 import ConfirmationModal from "./ConfirmationModal";
 import { useGetAllProductsQuery } from "../../redux/Features/Products/productApi";
+import { Link } from "react-router-dom";
 
 type TProductImage = {
   fileId: string;
@@ -23,12 +24,12 @@ type TProduct = {
 
 const MenuTable = () => {
   const { data } = useGetAllProductsQuery({});
-  console.log(data);
+  const [productId, setProductId] = useState("");
   const [openModal, setOpenModal] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
 
-  const handleDropdownToggle = (rowId: number) => {
+  const handleDropdownToggle = (rowId: string) => {
     setActiveDropdown((prev) => (prev === rowId ? null : rowId));
   };
 
@@ -52,7 +53,7 @@ const MenuTable = () => {
   console.log(sortedRows);
 
   return (
-    <div className="mt-8 overflow-x-auto">
+    <div className="mt-8 overflow-x-auto min-h-screen">
       <table className="bg-white w-full rounded-3xl shadow border-collapse">
         <thead className="bg-gray-100">
           <tr className="bg-white border-b">
@@ -88,14 +89,14 @@ const MenuTable = () => {
 
         <tbody>
           {sortedRows?.map((row: TProduct) => (
-            <tr key={row.id} className="border-b">
+            <tr key={row._id} className="border-b">
               <td className="text-[#6E7883] font-Poppins p-4">
                 {row._id.substring(0, 7) + "..."}
               </td>
               <td className="text-[#6E7883] font-Poppins p-4">
                 <img
                   src={row?.image?.thumbnailUrl}
-                  alt={row.dishName}
+                  alt={row.name}
                   className="w-10 h-10 rounded-md"
                 />
               </td>
@@ -134,14 +135,18 @@ const MenuTable = () => {
 
                 {activeDropdown === row._id && (
                   <div className="absolute right-0 mt-2 w-[226px] bg-white border rounded-2xl shadow-lg z-10 p-2">
-                    <button
+                    <Link
+                    to={`/dashboard/edit-product/${row._id}`}
                       onClick={() => console.log(`Editing row ${row._id}`)}
                       className="block text-left w-full p-[10px] text-sm text-[#424B54] hover:bg-gray-100"
                     >
                       Edit
-                    </button>
+                    </Link>
                     <button
-                      onClick={() => setOpenModal(true)}
+                      onClick={() => {
+                        setOpenModal(true);
+                        setProductId(row._id);
+                      }}
                       className="block text-left w-full p-[10px] text-sm text-[#DE3C4B] hover:bg-red-100 mt-1"
                     >
                       Delete
@@ -154,7 +159,17 @@ const MenuTable = () => {
         </tbody>
       </table>
 
-      <ConfirmationModal setOpenModal={setOpenModal} openModal={openModal} />
+      {sortedRows?.length === 0 && (
+        <p className="text-[#6E7883] font-Poppins text-center w-full mt-4">
+          No Products Available
+        </p>
+      )}
+
+      <ConfirmationModal
+        setOpenModal={setOpenModal}
+        openModal={openModal}
+        id={productId}
+      />
     </div>
   );
 };

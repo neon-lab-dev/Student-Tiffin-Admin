@@ -10,6 +10,7 @@ import rightArrow from "../assets/icons/right-arrow.svg";
 import threeDots from "../assets/icons/three-dots.svg";
 import sort from "../assets/icons/sort.svg";
 import calendar from "../assets/icons/calendar.svg";
+import cross from "../assets/icons/cross.svg";
 
 
 
@@ -31,6 +32,7 @@ export const ICONS = {
     sort,
     calendar,
     menuIcon,
+    cross,
  
 };
 

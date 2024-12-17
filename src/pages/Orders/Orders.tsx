@@ -1,22 +1,45 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Heading from "../../components/shared/Heading/Heading";
 import OrdersTable from "./OrdersTable";
 import { ICONS } from "../../assets";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useGetAllOrdersQuery } from "../../redux/Features/Orders/orderApi";
 
 const Orders = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const { data } = useGetAllOrdersQuery({});
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  console.log(selectedDate)
 
+  // Handle date change
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
     setIsCalendarOpen(false);
   };
 
+  const formatDate = (date: Date) => {
+    // Set time to 00:00:00 to avoid issues with timezones
+    date.setHours(0, 0, 0, 0);
+    return date.toISOString().split("T")[0];
+  };
+
+  // Filter orders based on the selected date
+  const filteredOrders = data?.orders?.filter((order: any) => {
+    const orderDate = formatDate(new Date(order.createdAt));
+
+    // If no date is selected, return all orders
+    if (!selectedDate) {
+      return true;
+    }
+
+    const selectedFormattedDate = formatDate(selectedDate);
+    console.log(selectedFormattedDate);
+    return orderDate === selectedFormattedDate;
+  });
+
   return (
-    <div className="pt-10">
+    <div className="pt-10 min-h-screen">
       <div className="flex items-center justify-between">
         <Heading title="Orders" />
         <div className="relative">
@@ -42,7 +65,9 @@ const Orders = () => {
           )}
         </div>
       </div>
-      <OrdersTable />
+
+      {/* Pass filtered orders to the table */}
+      <OrdersTable orders={filteredOrders} />
     </div>
   );
 };

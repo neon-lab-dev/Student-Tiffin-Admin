@@ -4,7 +4,7 @@ import MenuTable from "./MenuTable";
 
 const Menu = () => {
   return (
-    <div className="pt-10">
+    <div className="pt-10 min-h-screen">
       <div className="flex items-center justify-between">
       <Heading title="Menu" />
       <Link
