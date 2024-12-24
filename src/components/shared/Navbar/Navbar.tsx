@@ -8,7 +8,7 @@ const Navbar = () => {
   const location = useLocation();
 
   return (
-    <div className="bg-white border-b border-[#E6E6E6]">
+    <div className="bg-white border-b border-[#E6E6E6] sticky top-0 z-20">
       <div className="max-w-[1280px] mx-auto px-5 xl:px-0 py-4">
         <div className="font-Poppins flex items-center justify-between">
         <Link to={"/"}>

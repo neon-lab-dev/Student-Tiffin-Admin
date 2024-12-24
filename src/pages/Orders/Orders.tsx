@@ -8,7 +8,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useGetAllOrdersQuery } from "../../redux/Features/Orders/orderApi";
 
 const Orders = () => {
-  const { data } = useGetAllOrdersQuery({});
+  const { data, isLoading } = useGetAllOrdersQuery({});
+  console.log(data)
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
@@ -19,13 +20,12 @@ const Orders = () => {
   };
 
   const formatDate = (date: Date) => {
-    // Set time to 00:00:00 to avoid issues with timezones
     date.setHours(0, 0, 0, 0);
     return date.toISOString().split("T")[0];
   };
 
   // Filter orders based on the selected date
-  const filteredOrders = data?.orders?.filter((order: any) => {
+  const filteredOrders = data?.subscriptions?.filter((order: any) => {
     const orderDate = formatDate(new Date(order.createdAt));
 
     // If no date is selected, return all orders
@@ -43,6 +43,14 @@ const Orders = () => {
       <div className="flex items-center justify-between">
         <Heading title="Orders" />
         <div className="relative">
+         <div className="flex items-center gap-5">
+         <button
+            type="button"
+            onClick={() => setSelectedDate(null)}
+            className="px-6 py-[14px] border border-[#DE3C4B] text-[#DE3C4B] rounded-xl text-lg leading-6 font-semibold flex items-center gap-5"
+          >
+            All Orders
+          </button>
           <button
             type="button"
             onClick={() => setIsCalendarOpen(!isCalendarOpen)}
@@ -53,6 +61,7 @@ const Orders = () => {
               : "Pick a Date"}
             <img src={ICONS.calendar} alt="calendar" className="size-6" />
           </button>
+         </div>
 
           {isCalendarOpen && (
             <div className="absolute top-full right-0 mt-2 z-50">
@@ -65,9 +74,7 @@ const Orders = () => {
           )}
         </div>
       </div>
-
-      {/* Pass filtered orders to the table */}
-      <OrdersTable orders={filteredOrders} />
+      <OrdersTable orders={filteredOrders} isLoading={isLoading} />
     </div>
   );
 };
