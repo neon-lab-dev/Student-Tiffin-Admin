@@ -29,7 +29,7 @@ const Dropdown = () => {
   const handleLogout = async () => {
     try {
       const response = await fetch(
-        "https://blogbackend-theta.vercel.app/api/v1/admin/logout"
+        "https://student-tiffin-backend.vercel.app/api/v1/auth/logout"
       );
 
       if (response.ok) {
