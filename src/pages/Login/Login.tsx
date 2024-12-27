@@ -4,10 +4,10 @@ import InputField from "../../components/shared/InputField/InputField";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppDispatch } from "../../redux/hooks";
 import { useLoginMutation } from "../../redux/Features/Auth/authApi";
-import { setUser } from "../../redux/features/Auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
+import { setUser } from "../../redux/Features/Auth/authSlice";
 
 type TLoginFormValues = {
   email: string;
@@ -38,7 +38,7 @@ const Login = () => {
         toast.success("Welcome Back!!");
       }
 
-      navigate("/dashboard");
+      navigate("/dashboard/users");
     } catch (err) {
       toast.error("Something went wrong! Please try again.");
     }

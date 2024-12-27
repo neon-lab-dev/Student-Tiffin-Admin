@@ -5,7 +5,7 @@ import { navigationLinks } from "./navlinks";
 import { useAppDispatch } from "../../../redux/hooks";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
-import { logout } from "../../../redux/features/Auth/authSlice";
+import { logout } from "../../../redux/Features/Auth/authSlice";
 
 const Dropdown = () => {
   const location = useLocation();

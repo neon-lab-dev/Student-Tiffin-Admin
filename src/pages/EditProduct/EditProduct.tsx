@@ -81,6 +81,7 @@ const EditProduct = () => {
         return response?.message || "Product updated successfully!";
       },
       error: (err) => {
+        console.log(err)
         toast.error("Error updating product");
         return "Failed to update product.";
       },
