@@ -14,8 +14,14 @@ const Users = () => {
 
   const columns =
     userTab === "All Users"
-      ? ["User ID", "Name", "Email", "Mobile Number", "User Type", "Status", "Action"]
-      : ["User ID", "Name", "Email", "Mobile Number", "Subscription Plan", "Status", "Action"];
+      ? ["User ID", "Name", "Email", "Mobile Number"]
+      : ["User ID", "Name", "Email", "Mobile Number"];
+
+      // Final one
+  // const columns =
+  //   userTab === "All Users"
+  //     ? ["User ID", "Name", "Email", "Mobile Number", "User Type", "Status"]
+  //     : ["User ID", "Name", "Email", "Mobile Number", "Subscription Plan", "Status"];
 
   return (
     <div className="pt-10 flex flex-col gap-8 min-h-screen">

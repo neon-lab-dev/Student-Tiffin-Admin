@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { ICONS } from "../../assets";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { tdStyle, thStyle } from "./user.constants";
 import Spinner from "../../components/shared/Loader/Spinner";
 
@@ -21,25 +20,23 @@ type TUsersTableProps = {
 };
 
 const UsersTable: React.FC<TUsersTableProps> = ({ data, columns, isLoading }) => {
-  const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
+  // const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
+  // const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
 
-  const handleDropdownToggle = (rowId: number) => {
-    setActiveDropdown((prev) => (prev === rowId ? null : rowId));
-  };
+  // const handleDropdownToggle = (rowId: number) => {
+  //   setActiveDropdown((prev) => (prev === rowId ? null : rowId));
+  // };
 
-  const handleSortToggle = () => {
-    setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
-  };
+  // const handleSortToggle = () => {
+  //   setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+  // };
 
-  const sortedData =
-    sortOrder === "asc"
-      ? [...data].sort((a, b) => a.status.localeCompare(b.status))
-      : sortOrder === "desc"
-        ? [...data].sort((a, b) => b.status.localeCompare(a.status))
-        : data;
-
-  console.log(sortedData);
+  // const sortedData =
+  //   sortOrder === "asc"
+  //     ? [...data].sort((a, b) => a.status.localeCompare(b.status))
+  //     : sortOrder === "desc"
+  //       ? [...data].sort((a, b) => b.status.localeCompare(a.status))
+  //       : data;
 
   return (
     <div className="overflow-x-auto h-full">
@@ -63,14 +60,14 @@ const UsersTable: React.FC<TUsersTableProps> = ({ data, columns, isLoading }) =>
                     }`}
                 >
                   {col}
-                  {col === "Status" && (
+                  {/* {col === "Status" && (
                     <img
                       src={ICONS.sort}
                       alt="sort-icon"
                       className="cursor-pointer ml-2 inline"
                       onClick={handleSortToggle}
                     />
-                  )}
+                  )} */}
                 </th>
               ))}
             </tr>
@@ -85,15 +82,15 @@ const UsersTable: React.FC<TUsersTableProps> = ({ data, columns, isLoading }) =>
                     </div>
                   </td>
                 </tr>
-              ) : sortedData?.length === 0 ? (
+              ) : data?.length === 0 ? ( //sortedData will come here
                 <tr>
                   <td colSpan={7} className="p-4 text-center text-[#6E7883] font-Poppins">
-                    No Order Received
+                    No User Available
                   </td>
                 </tr>
               ) :
             
-            (sortedData?.map((user) => (
+            (data?.map((user:any) => ( //sortedData will come here
               <tr key={user.id} className="border-b">
                 <td className={tdStyle}>{user._id}</td>
                 <td className={tdStyle}>
@@ -102,7 +99,7 @@ const UsersTable: React.FC<TUsersTableProps> = ({ data, columns, isLoading }) =>
                 <td className={tdStyle}>{user.email}</td>
                 <td className={tdStyle}>{user.phone}</td>
                 <td className={tdStyle}>{user.userType || user.plan}</td>
-                <td className={tdStyle}>
+                {/* <td className={tdStyle}>
                   <div
                     className={`${user.status === "Unavailable"
                         ? "bg-red-100 text-red-600"
@@ -111,8 +108,10 @@ const UsersTable: React.FC<TUsersTableProps> = ({ data, columns, isLoading }) =>
                   >
                     {user.status}
                   </div>
-                </td>
-                <td className="text-[#6E7883] font-Poppins p-4 relative">
+                </td> */}
+
+                {/* Action buttons */}
+                {/* <td className="text-[#6E7883] font-Poppins p-4 relative">
                   <button
                     onClick={() => handleDropdownToggle(user.id)}
                     className="p-2 hover:bg-gray-100 rounded-md"
@@ -140,7 +139,7 @@ const UsersTable: React.FC<TUsersTableProps> = ({ data, columns, isLoading }) =>
                       </button>
                     </div>
                   )}
-                </td>
+                </td> */}
               </tr>
             )))}
           </tbody>

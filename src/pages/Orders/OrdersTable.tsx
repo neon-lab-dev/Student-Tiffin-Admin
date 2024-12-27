@@ -1,26 +1,24 @@
-import { useState } from "react";
-import { ICONS } from "../../assets";
-import { Order } from "./order.types";
 import Spinner from "../../components/shared/Loader/Spinner";
+import { TOrder } from "./order.types";
 
-const OrdersTable = ({ orders, isLoading }: { orders: Order[]; isLoading: boolean }) => {
-  const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
+const OrdersTable = ({ orders, isLoading }: { orders: TOrder[]; isLoading: boolean }) => {
+  // const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  // const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
 
-  const handleDropdownToggle = (rowId: number) => {
-    setActiveDropdown((prev) => (prev === rowId ? null : rowId));
-  };
+  // const handleDropdownToggle = (rowId: string) => {
+  //   setActiveDropdown((prev) => (prev === rowId ? null : rowId));
+  // };
 
-  const sortedRows =
-    sortOrder === "asc"
-      ? [...orders].sort((a, b) => a.status.localeCompare(b.status))
-      : sortOrder === "desc"
-        ? [...orders].sort((a, b) => b.status.localeCompare(a.status))
-        : orders;
+  // const sortedRows =
+  //   sortOrder === "asc"
+  //     ? [...orders].sort((a, b) => a.status.localeCompare(b.status))
+  //     : sortOrder === "desc"
+  //       ? [...orders].sort((a, b) => b.status.localeCompare(a.status))
+  //       : orders;
 
-  const handleSortToggle = () => {
-    setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
-  };
+  // const handleSortToggle = () => {
+  //   setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+  // };
 
   return (
     <div className="mt-8 overflow-x-auto">
@@ -31,8 +29,9 @@ const OrdersTable = ({ orders, isLoading }: { orders: Order[]; isLoading: boolea
             <th className="text-[#293241] font-Poppins font-medium p-4 text-left">Name</th>
             <th className="text-[#293241] font-Poppins font-medium p-4 text-left">Email</th>
             <th className="text-[#293241] font-Poppins font-medium p-4 text-left">Mobile Number</th>
-            <th className="text-[#293241] font-Poppins font-medium p-4 text-left">Order Type</th>
-            <th className="text-[#293241] font-Poppins font-medium p-4 text-left flex items-center gap-1">
+            <th className="text-[#293241] font-Poppins font-medium p-4 text-left rounded-tr-3xl">Order Type</th>
+
+            {/* <th className="text-[#293241] font-Poppins font-medium p-4 text-left flex items-center gap-1">
               Status
               <img
                 src={ICONS.sort}
@@ -41,7 +40,7 @@ const OrdersTable = ({ orders, isLoading }: { orders: Order[]; isLoading: boolea
                 onClick={handleSortToggle}
               />
             </th>
-            <th className="text-[#293241] font-Poppins font-medium p-4 text-left rounded-tr-3xl">Action</th>
+            <th className="text-[#293241] font-Poppins font-medium p-4 text-left rounded-tr-3xl">Action</th> */}
           </tr>
         </thead>
 
@@ -63,8 +62,9 @@ const OrdersTable = ({ orders, isLoading }: { orders: Order[]; isLoading: boolea
                 </td>
               </tr>
             ) : (
-              sortedRows.map((order: Order) => (
-                <tr key={order._id} className="border-b">
+              // sortedRows will come in place of orders
+              orders.map((order: TOrder) => (
+                <tr key={order?._id} className="border-b">
                   <td className="text-[#6E7883] font-Poppins p-4">{order._id}</td>
                   <td className="text-[#6E7883] font-Poppins p-4">
                     {order.user?.firstName} {order?.user?.lastName}
@@ -74,8 +74,9 @@ const OrdersTable = ({ orders, isLoading }: { orders: Order[]; isLoading: boolea
                   <td className="text-[#6E7883] font-Poppins p-4">
                     {order.name} - {order?.duration}
                   </td>
-                  <td
-                    className={`${order.status === "CANCELLED"
+                  {/* Status */}
+                  {/* <td
+                    className={`${order?.status === "CANCELLED"
                         ? "text-[#DE3C4B]"
                         : order.status === "RECEIVED"
                           ? "text-blue-500"
@@ -95,16 +96,18 @@ const OrdersTable = ({ orders, isLoading }: { orders: Order[]; isLoading: boolea
                           : order.status === "APPROVED"
                             ? "Approved"
                             : "Cancelled"}
-                  </td>
-                  <td className="text-[#6E7883] font-Poppins p-4 relative">
+                  </td> */}
+
+                  {/* Action */}
+                  {/* <td className="text-[#6E7883] font-Poppins p-4 relative">
                     <button
-                      onClick={() => handleDropdownToggle(order._id)}
+                      onClick={() => handleDropdownToggle(order?._id)}
                       className="p-2 hover:bg-gray-100 rounded-md"
                     >
                       <img src={ICONS.threeDots} alt="three-dots" className="size-6" />
                     </button>
 
-                    {activeDropdown === order._id && (
+                    {activeDropdown === order?._id && (
                       <div className="absolute right-0 mt-2 w-[226px] bg-white border rounded-2xl shadow-lg z-10 p-2">
                         <button
                           onClick={() => console.log(`Editing order ${order._id}`)}
@@ -119,7 +122,7 @@ const OrdersTable = ({ orders, isLoading }: { orders: Order[]; isLoading: boolea
                         </button>
                       </div>
                     )}
-                  </td>
+                  </td> */}
                 </tr>
               ))
             )}
